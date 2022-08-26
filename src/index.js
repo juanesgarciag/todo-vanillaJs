@@ -1,6 +1,8 @@
-import {saludar} from './js/components.js'
+
 import './style.css';
 
-const nombre = 'Juanes';
+import { Todo } from './classes/todo.class.js';
 
-saludar(nombre);
+const homework = new Todo('Aprender Typescript');
+
+console.log(homework)
