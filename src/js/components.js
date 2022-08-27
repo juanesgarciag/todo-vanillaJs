@@ -1,17 +1,61 @@
-import '../css/components.css';
+import "../css/components.css";
+import { Todo } from "../classes/index.classes.js";
+import { todoList } from "../index.js";
 // import webPackLogo from '../assets/img/webpack-logo.png';
 
-export const saludar = (nombre) => {
-    console.log('Creando etiqueta h1');
+const d = document;
 
-    const h1 = document.createElement('h1');
-    h1.innerText = `Hola, ${nombre}!!!`;
+//Referencias en HTML
+const divTodoList = d.querySelector(".todo-list");
+const txtInput = d.querySelector(".new-todo");
 
-    document.body.append(h1);
+export const createTodoHtml = (todo) => {
+  const htmlTodo = `
+    <li class="${todo.completed ? "completed" : ""}" data-id="${todo.id}">
+        <div class="view">
+            <input class="toggle" type="checkbox" ${
+              todo.completed ? "checked" : ""
+            }>
+            <label>${todo.homeWork}</label>
+            <button class="destroy"></button>
+        </div>
+        <input class="edit" value="Create a TodoMVC template">
+    </li>
+    `;
 
-    //Img
-    // const img = document.createElement('img');
-    // img.src = webPackLogo;
-    // document.body.append(img);
-}
+  const div = d.createElement("div");
+  div.innerHTML = htmlTodo;
 
+  divTodoList.append(div.firstElementChild);
+
+  return div.firstElementChild;
+};
+
+//Eventos
+
+txtInput.addEventListener("keyup", (event) => {
+  if (event.keyCode === 13 && txtInput.value.length > 0) {
+    const newTodo = new Todo(txtInput.value);
+    todoList.newTodo(newTodo);
+
+    createTodoHtml(newTodo);
+
+    txtInput.value = "";
+  }
+});
+
+divTodoList.addEventListener("click", (event) => {
+  const elementName = event.target.localName;
+  const todoElement = event.target.parentElement.parentElement;
+  const todoId = todoElement.getAttribute("data-id");
+
+  if (elementName.includes("input")) {
+    //click en el check
+
+    todoList.markCompleteTodo(todoId);
+    todoElement.classList.toggle("completed");
+  } else if (elementName.includes("button")) {
+    todoList.deleteTodo( todoId );
+    divTodoList.removeChild(todoElement);
+  }
+});
