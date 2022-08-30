@@ -1,6 +1,6 @@
-# Webpack Starter
+# Aplicación de Tareas
 
-Este es el proyecto inicial para crear aplicaciones utilizando Webpack y Babel
+En este proyecto puedes crear tareas por hacer, tareas, terminadas y pendientes, para tu control de las mismas.
 
 ### Notas:
 
