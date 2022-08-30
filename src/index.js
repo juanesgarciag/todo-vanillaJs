@@ -6,9 +6,4 @@ import { createTodoHtml } from './js/components';
 
 export const todoList = new TodoList();
 
-const homework = new Todo('Aprender Typescript');
-todoList.newTodo( homework );
-
-console.log(todoList);
-
-createTodoHtml( homework );
+todoList.todos.forEach(todo => createTodoHtml( todo ));
