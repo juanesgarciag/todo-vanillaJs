@@ -29,7 +29,7 @@ export class TodoList {
 
     }
 
-    deleteCompleted ( id ) {
-        
+    deleteCompleted (  ) {
+        this.todos = this.todos.filter( todo => !todo.completed );
     }
 }

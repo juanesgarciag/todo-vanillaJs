@@ -8,6 +8,7 @@ const d = document;
 //Referencias en HTML
 const divTodoList = d.querySelector(".todo-list");
 const txtInput = d.querySelector(".new-todo");
+const btnDelete = d.querySelector(".clear-completed");
 
 export const createTodoHtml = (todo) => {
   const htmlTodo = `
@@ -58,4 +59,18 @@ divTodoList.addEventListener("click", (event) => {
     todoList.deleteTodo( todoId );
     divTodoList.removeChild(todoElement);
   }
+});
+
+btnDelete.addEventListener('click', () => {
+
+  todoList.deleteCompleted();
+
+  for( let i = divTodoList.children.length-1; i>=0; i--){
+    const element = divTodoList.children[i];
+
+    if( element.classList.contains('completed')){
+      divTodoList.removeChild(element);
+    }
+  }
+
 });
