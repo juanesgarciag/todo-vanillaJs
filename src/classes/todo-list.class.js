@@ -54,4 +54,10 @@ export class TodoList {
         this.todos = this.todos.map( obj => Todo.fromJson(obj));
 
     }
+
+    checkPending() {
+
+        return this.todos.filter(todo => !todo.completed).length;
+
+    }
 }

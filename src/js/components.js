@@ -1,5 +1,5 @@
 import "../css/components.css";
-import { Todo } from "../classes/index.classes.js";
+import { Todo, TodoList } from "../classes/index.classes.js";
 import { todoList } from "../index.js";
 // import webPackLogo from '../assets/img/webpack-logo.png';
 
@@ -11,6 +11,7 @@ const txtInput = d.querySelector(".new-todo");
 const btnDelete = d.querySelector(".clear-completed");
 const ulFilters = d.querySelector('.filters');
 const anchorFilters = d.querySelectorAll('.filtro');
+const pendingCounter = d.querySelector('.todo-count');
 
 export const createTodoHtml = (todo) => {
   const htmlTodo = `
@@ -74,7 +75,6 @@ btnDelete.addEventListener('click', () => {
       divTodoList.removeChild(element);
     }
   }
-
 });
 
 ulFilters.addEventListener('click', event => {
@@ -104,4 +104,20 @@ ulFilters.addEventListener('click', event => {
 
     }
   }
+});
+
+// Observer
+let pendingMutationsCounter = 0;
+let mutationObserver = new MutationObserver(mutations =>{
+  mutations.forEach( () => {
+    pendingMutationsCounter = todoList.checkPending()
+    pendingCounter.innerHTML = `<strong>${(pendingMutationsCounter>0 ? pendingMutationsCounter : '0')}</strong> pendiente(s)`;
+  });
+});
+
+mutationObserver.observe(divTodoList, {
+  attributes: true,
+  CharacterData: true,
+  subtree: true,
+  childList: true
 })
